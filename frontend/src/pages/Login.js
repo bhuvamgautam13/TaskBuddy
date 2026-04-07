@@ -7,7 +7,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  
 const handleLogin = async () => {
   try {
     const res = await API.post("/users/login", { email, password });
@@ -15,7 +15,7 @@ const handleLogin = async () => {
     console.log("LOGIN RESPONSE:", res.data); // 👈 ADD THIS
 
     localStorage.setItem("token", res.data.token);
-    window.location.href = "/home";
+    navigate("/home");
 
   } catch (err) {
     console.log("LOGIN ERROR:", err.response?.data); // 👈 ADD THIS
@@ -47,5 +47,5 @@ const handleLogin = async () => {
     </div>
   );
 }
-navigate("/home");
+
 export default Login;
