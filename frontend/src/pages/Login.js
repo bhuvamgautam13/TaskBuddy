@@ -22,7 +22,7 @@ const handleLogin = async () => {
     alert("Login failed");
   }
 };
-
+navigate("/home");
   return (
     <div className="login-container">
       <div className="login-box">
