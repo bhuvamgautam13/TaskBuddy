@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
   type: String,
   enum: ["client", "worker"],
   default: "client"
-}.required(),
+},
 
-  wallet: {
+wallet: {
   type: Number,
   default: 0,
 },
