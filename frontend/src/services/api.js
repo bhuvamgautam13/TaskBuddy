@@ -13,12 +13,12 @@ API.interceptors.request.use((req) => {
 
   return req;
 });
-const acceptTask = async (id) => {
-  await API.put(`/tasks/${id}/accept`);
-};
+// const acceptTask = async (id) => {
+//   await API.put(`/tasks/${id}/accept`);
+// };
 
-const completeTask = async (id) => {
-  await API.put(`/tasks/${id}/complete`);
-};
+// const completeTask = async (id) => {
+//   await API.put(`/tasks/${id}/complete`);
+// };
 
 export default API;

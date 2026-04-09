@@ -17,7 +17,7 @@ function Signup() {
     }
 
     try {
-      const res = await API.post("/users/signup", {
+       await API.post("/users/signup", {
         name,
         email,
         password,
