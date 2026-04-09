@@ -5,16 +5,16 @@ const userSchema = new mongoose.Schema({
   email: String,
   password: String,
 
-  role: {
-    type: String,
-    enum: ["client", "worker"],
-    default: "client",
-  },
+ role: {
+  type: String,
+  enum: ["client", "worker"],
+  default: "client"
+}.required(),
 
   wallet: {
-    type: Number,
-    default: 0,
-  },
+  type: Number,
+  default: 0,
+},
 
   location: {
     lat: Number,

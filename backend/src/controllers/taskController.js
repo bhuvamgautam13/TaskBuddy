@@ -26,32 +26,40 @@ exports.getTasks = async (req, res) => {
 exports.acceptTask = async (req, res) => {
   const task = await Task.findById(req.params.id);
 
+  if (!task) return res.status(404).json({ message: "Task not found" });
+
+  if (task.status !== "open") {
+    return res.status(400).json({ message: "Already taken" });
+  }
+
   task.status = "accepted";
   task.workerId = req.user.id;
 
   await task.save();
 
-  res.json(task);
+  res.json({ message: "Task accepted", task });
 };
 
-// COMPLETE TASK + PAYMENT
+// COMPLETE TASK + payment processing
 exports.completeTask = async (req, res) => {
   const task = await Task.findById(req.params.id);
-
-  task.status = "completed";
-  await task.save();
-
   const worker = await User.findById(task.workerId);
+
+  if (!task) return res.status(404).json({ message: "Task not found" });
 
   const platformFee = task.price * 0.1;
   const workerPay = task.price - platformFee;
 
-  worker.wallet += workerPay;
+  worker.wallet = (worker.wallet || 0) + workerPay;
+
   await worker.save();
 
+  task.status = "completed";
+  await task.save();
+
   res.json({
-    message: "Task completed",
-    workerPay,
-    platformFee
+    message: "Task completed & paid",
+    workerEarned: workerPay,
+    platformFee,
   });
 };

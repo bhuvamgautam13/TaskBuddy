@@ -4,14 +4,15 @@ const router = express.Router();
 const {
   createTask,
   getTasks,
-  acceptTask,
-  completeTask
+  acceptTask
 } = require("../controllers/taskController");
 
-router.post("/", createTask);
-router.get("/", getTasks);
+const auth = require("../middleware/auth");
 
-router.post("/:id/accept", acceptTask);
-router.post("/:id/complete", completeTask);
+// 🔐 Protected routes
+router.post("/", auth, createTask);
+router.get("/", auth, getTasks);
+router.put("/:id/accept", auth, acceptTask);
+router.put("/:id/complete", auth, completeTask);
 
 module.exports = router;
