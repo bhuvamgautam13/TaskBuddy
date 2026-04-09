@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-
 function Navbar() {
   return (
     <div className="navbar">
       <h2>TaskBuddy 🚀</h2>
 
       <div className="nav-links">
-        <Link to="/home">Home</Link>
+        <a href="/home">Home</a>
+
         <button
           onClick={() => {
             localStorage.removeItem("token");
@@ -19,5 +18,3 @@ function Navbar() {
     </div>
   );
 }
-
-export default Navbar;
