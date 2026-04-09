@@ -4,7 +4,9 @@ const router = express.Router();
 const {
   createTask,
   getTasks,
-  acceptTask
+  acceptTask,
+  completeTask
+
 } = require("../controllers/taskController");
 
 const auth = require("../middleware/auth");
