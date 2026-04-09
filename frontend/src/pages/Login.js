@@ -6,7 +6,9 @@ import "./Login.css";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("client"); // 👈 NEW
   const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
 
   const handleLogin = async () => {
@@ -17,17 +19,19 @@ function Login() {
     try {
       setLoading(true);
 
-      const res = await API.post("/users/login", { email, password });
-
-      console.log("LOGIN RESPONSE:", res.data);
+      const res = await API.post("/users/login", {
+        email,
+        password,
+        role, // 👈 send role
+      });
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", role); // 👈 store role
 
       alert("Login successful ✅");
       navigate("/home");
 
     } catch (err) {
-      console.log("LOGIN ERROR:", err.response?.data);
       alert(err.response?.data?.message || "Login failed ❌");
     } finally {
       setLoading(false);
@@ -39,7 +43,23 @@ function Login() {
       <div className="login-box">
 
         <h2>Welcome Back 👋</h2>
-        <p className="login-subtitle">Login to continue to TaskBuddy</p>
+        <p className="login-subtitle">Login to TaskDash</p>
+
+        {/* 🔥 ROLE TOGGLE */}
+        <div className="role-toggle">
+          <button
+            className={role === "client" ? "active" : ""}
+            onClick={() => setRole("client")}
+          >
+            Client
+          </button>
+          <button
+            className={role === "worker" ? "active" : ""}
+            onClick={() => setRole("worker")}
+          >
+            Worker
+          </button>
+        </div>
 
         <input
           type="email"
@@ -61,7 +81,7 @@ function Login() {
 
         <p className="login-footer">
           Don’t have an account?{" "}
-          <Link to="/Signup">Signup</Link>
+          <Link to="/signup">Signup</Link>
         </p>
 
       </div>
